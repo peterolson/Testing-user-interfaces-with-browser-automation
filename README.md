@@ -1,4 +1,4 @@
-This repository contains all the code from the article Testing user interfaces with browser automation.
+This repository contains all the code from the article [Testing user interfaces with browser automation](http://tutorials.pluralsight.com/front-end-javascript/testing-user-interfaces-with-browser-automation).
 
 # Setup
 
