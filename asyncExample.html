@@ -1,0 +1,18 @@
+<button id="add">Add item</button>
+<ul id="list"></ul>
+<script>
+    var add = document.getElementById("add"),
+        list = document.getElementById("list"),
+        count = 0;
+    add.onclick = function () {
+        add.disabled = true;
+        setTimeout(function () {
+            add.disabled = false;
+            var li = document.createElement("li");
+            count++;
+            li.className = "item" + count;
+            li.innerText = "Item #" + count;
+            list.appendChild(li);
+        }, Math.random() * 1000);
+    };
+</script>

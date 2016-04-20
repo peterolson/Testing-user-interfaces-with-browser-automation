@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BMI Calculator</title>
+        <style>
+            #result, #error {
+                display: none;
+            }
+            #error {
+                color: red;
+            }
+            #bmi, #category {
+                font-weight: bold;
+            }
+            input[type=text] {
+                width: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <label>Height: <input type="text" name="height" /> cm</label><br />
+            <label>Weight: <input type="text" name="weight" /> kg</label><br />
+            <input type="submit" value="Calculate BMI" />
+            <p id="result">Your body mass index is <span id="bmi"></span>. You are <span id="category"></span>.</p>
+            <p id="error"></p>
+        </form>
+        <script>
+            function calculateBMI(weight, height) {
+                height /= 100; // convert from cm to m
+                return weight / (height * height);
+            }
+
+            function getCategory(bmi) {
+                if (bmi < 15) return "very severely underweight";
+                if (bmi < 16) return "severely underweight";
+                if (bmi < 18.5) return "underweight";
+                if (bmi < 25) return "normal";
+                if (bmi < 30) return "overweight";
+                if (bmi < 35) return "obese";
+                if (bmi < 40) return "severely obese";
+                return "very severely obese";
+            }
+
+            function validateInput(height, weight) {
+                var errors = [];
+                if (height === "")
+                    errors.push("The height field is empty.");
+                if (isNaN(height))
+                    errors.push("The height entered is not a valid number.");
+                if (weight === "")
+                    errors.push("The weight field is empty.");
+                if (isNaN(weight))
+                    errors.push("The weight entered is not a valid number.");
+                if (height === "0" && weight === "0")
+                    errors.push("Either the height or the weight must be non-zero.");
+                return errors;
+            }
+
+            var form = document.forms[0],
+                result = document.getElementById("result"),
+                bmiSpan = document.getElementById("bmi"),
+                categorySpan = document.getElementById("category"),
+                error = document.getElementById("error");
+            form.onsubmit = function () {
+                var height = form.height.value,
+                    weight = form.weight.value;
+                var errors = validateInput(height, weight);
+                if (errors.length) {
+                    error.innerHTML = errors.join("<br>");
+                    error.style.display = "block";
+                    result.style.display = "none";
+                    return false;
+                }
+                var bmi = calculateBMI(weight, height),
+                    category = getCategory(bmi);
+                result.style.display = "block";
+                error.style.display = "none";
+                bmiSpan.innerText = bmi.toFixed(2);
+                categorySpan.innerText = category;
+                return false;
+            };
+        </script>
+    </body>
+</html>
